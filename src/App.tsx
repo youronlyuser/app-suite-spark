@@ -25,6 +25,7 @@ const App = () => (
           <Route path="/kanban" element={<KanbanBoard />} />
           <Route path="/pomodoro" element={<PomodoroTimer />} />
           <Route path="/clock" element={<FlipClock />} />
+          <Route path="/legal" element={<Legal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

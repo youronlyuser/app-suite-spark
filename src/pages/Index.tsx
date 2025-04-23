@@ -14,31 +14,31 @@ const Index = () => {
 
   useEffect(() => {
     setMounted(true);
-    document.title = "App Suite";
+    document.title = "Productivity Hub";
   }, []);
 
   const apps = [
     { 
       name: "To-Do List", 
-      icon: <CheckSquare className="app-icon" />, 
+      icon: <CheckSquare className="app-icon text-gray-400" />, 
       path: "/todo",
       description: "Track up to 6 important tasks"
     },
     { 
       name: "Kanban Board", 
-      icon: <Kanban className="app-icon" />, 
+      icon: <Kanban className="app-icon text-gray-400" />, 
       path: "/kanban",
       description: "Organize your workflow"
     },
     { 
       name: "Pomodoro", 
-      icon: <Clock className="app-icon" />, 
+      icon: <Clock className="app-icon text-gray-400" />, 
       path: "/pomodoro",
       description: "Focus timer with breaks"
     },
     { 
       name: "Flip Clock", 
-      icon: <FlipHorizontal className="app-icon" />, 
+      icon: <FlipHorizontal className="app-icon text-gray-400" />, 
       path: "/clock",
       description: "Aesthetic time display"
     }
@@ -51,7 +51,7 @@ const Index = () => {
       <div className="py-12 px-4">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            App Suite
+            Productivity Hub
           </h1>
           <p className="text-gray-400">Productivity tools to streamline your workflow</p>
         </header>
@@ -69,7 +69,9 @@ const Index = () => {
         </div>
 
         <footer className="mt-16 text-center text-sm text-gray-500">
-          <p>Made with ❤️ using React and Tailwind CSS</p>
+          <p>
+            Made with ❤️ using React and Tailwind CSS • <Link to="/legal" className="hover:text-gray-300 underline">Privacy & Terms</Link>
+          </p>
         </footer>
       </div>
     </div>

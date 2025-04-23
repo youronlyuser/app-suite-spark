@@ -1,33 +1,16 @@
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import AppLayout from "@/components/AppLayout";
-import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
-
-interface FlipClockSettings {
-  use24Hour: boolean;
-}
+import { fullscreen } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const FlipClock = () => {
   const [time, setTime] = useState(new Date());
-  const [settings, setSettings] = useState<FlipClockSettings>(() => 
-    getLocalStorage<FlipClockSettings>("flipClockSettings", {
-      use24Hour: false
-    })
-  );
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Save settings to localStorage when they change
   useEffect(() => {
-    setLocalStorage("flipClockSettings", settings);
-  }, [settings]);
-
-  useEffect(() => {
-    document.title = "Flip Clock | App Suite";
+    document.title = "Flip Clock | Productivity Hub";
     
-    // Update the time every second
     const interval = setInterval(() => {
       setTime(new Date());
     }, 1000);
@@ -39,47 +22,18 @@ const FlipClock = () => {
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      const element = document.documentElement;
-      if (element.requestFullscreen) {
-        element.requestFullscreen()
-          .then(() => {
-            setIsFullscreen(true);
-          })
-          .catch(err => {
-            console.error(`Error attempting to enable fullscreen: ${err.message}`);
-          });
-      }
+      document.documentElement.requestFullscreen()
+        .then(() => setIsFullscreen(true))
+        .catch(err => console.error(`Error attempting to enable fullscreen: ${err.message}`));
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen()
-          .then(() => {
-            setIsFullscreen(false);
-          })
-          .catch(err => {
-            console.error(`Error attempting to exit fullscreen: ${err.message}`);
-          });
-      }
+      document.exitFullscreen()
+        .then(() => setIsFullscreen(false))
+        .catch(err => console.error(`Error attempting to exit fullscreen: ${err.message}`));
     }
   };
 
-  const getTimeValues = () => {
-    let hours = time.getHours();
-    const minutes = time.getMinutes();
-    let period = "";
-    
-    if (!settings.use24Hour) {
-      period = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12 || 12; // Convert to 12-hour format
-    }
-    
-    return {
-      hours: hours.toString().padStart(2, '0'),
-      minutes: minutes.toString().padStart(2, '0'),
-      period
-    };
-  };
-
-  const { hours, minutes, period } = getTimeValues();
+  const hours = time.getHours().toString().padStart(2, '0');
+  const minutes = time.getMinutes().toString().padStart(2, '0');
   
   return (
     <AppLayout title="Flip Clock">
@@ -88,7 +42,6 @@ const FlipClock = () => {
       }`}>
         <div className="flex flex-col items-center">
           <div className="flex mb-8">
-            {/* Hours */}
             <div className="flip-card" aria-label="Hours digit 1">
               <div className={`flip-card-inner ${time.getSeconds() % 2 === 0 ? "flipping" : ""}`}>
                 <div className="flip-card-front">{hours[0]}</div>
@@ -103,10 +56,8 @@ const FlipClock = () => {
               </div>
             </div>
             
-            {/* Separator */}
-            <div className="flex flex-col justify-center mx-2 text-4xl font-bold">:</div>
+            <div className="flex flex-col justify-center mx-2 text-4xl font-bold text-gray-400">:</div>
             
-            {/* Minutes */}
             <div className="flip-card" aria-label="Minutes digit 1">
               <div className={`flip-card-inner ${time.getSeconds() % 2 === 1 ? "flipping" : ""}`}>
                 <div className="flip-card-front">{minutes[0]}</div>
@@ -120,30 +71,16 @@ const FlipClock = () => {
                 <div className="flip-card-back">{minutes[1]}</div>
               </div>
             </div>
-            
-            {/* AM/PM */}
-            {!settings.use24Hour && (
-              <div className="ml-3 flex flex-col justify-center">
-                <div className="text-2xl font-medium">{period}</div>
-              </div>
-            )}
           </div>
           
-          {/* Settings */}
-          <div className={`flex items-center justify-center gap-6 ${isFullscreen ? "mt-8" : ""}`}>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="hour-format"
-                checked={settings.use24Hour}
-                onCheckedChange={(checked) => setSettings({ ...settings, use24Hour: checked })}
-              />
-              <Label htmlFor="hour-format">24-Hour Format</Label>
-            </div>
-            
-            <Button variant="outline" onClick={toggleFullscreen}>
-              {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-            </Button>
-          </div>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={toggleFullscreen}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-300"
+          >
+            <fullscreen className="h-6 w-6" />
+          </Button>
         </div>
       </div>
     </AppLayout>

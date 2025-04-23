@@ -133,8 +133,12 @@
   }
 
   .flip-card {
-    @apply relative w-32 h-48 md:w-40 md:h-56 bg-gray-800 rounded-lg mx-2 overflow-hidden select-none;
+    @apply relative w-40 h-60 md:w-56 md:h-80 bg-gray-800 rounded-lg mx-2 overflow-hidden select-none;
     perspective: 1000px;
+  }
+
+  .flip-card-front, .flip-card-back {
+    @apply absolute w-full h-full flex items-center justify-center text-7xl md:text-9xl font-semibold bg-gray-800 backface-visibility-hidden;
   }
 
   .circular-progress {
