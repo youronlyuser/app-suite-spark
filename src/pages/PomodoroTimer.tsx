@@ -155,7 +155,7 @@ const PomodoroTimer = () => {
               strokeWidth="5%"
               strokeDasharray="283"
               strokeDashoffset={283 - (283 * progressPercentage()) / 100}
-              className={timerState === TimerState.Focus ? "text-primary" : "text-accent"}
+              className={`${timerState === TimerState.Focus ? "text-white" : "text-white/70"}`}
             />
           </svg>
           
