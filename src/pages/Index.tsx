@@ -20,25 +20,25 @@ const Index = () => {
   const apps = [
     { 
       name: "To-Do List", 
-      icon: <CheckSquare className="app-icon text-gray-400" />, 
+      icon: <CheckSquare className="app-icon text-gray-500" />, 
       path: "/todo",
       description: "Track up to 6 important tasks"
     },
     { 
       name: "Kanban Board", 
-      icon: <Kanban className="app-icon text-gray-400" />, 
+      icon: <Kanban className="app-icon text-gray-500" />, 
       path: "/kanban",
       description: "Organize your workflow"
     },
     { 
       name: "Pomodoro", 
-      icon: <Clock className="app-icon text-gray-400" />, 
+      icon: <Clock className="app-icon text-gray-500" />, 
       path: "/pomodoro",
       description: "Focus timer with breaks"
     },
     { 
       name: "Flip Clock", 
-      icon: <FlipHorizontal className="app-icon text-gray-400" />, 
+      icon: <FlipHorizontal className="app-icon text-gray-500" />, 
       path: "/clock",
       description: "Aesthetic time display"
     }
@@ -50,7 +50,7 @@ const Index = () => {
     <div className="min-h-screen flex items-center justify-center">
       <div className="py-12 px-4">
         <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-3 text-white">
             Productivity Hub
           </h1>
           <p className="text-gray-400">Productivity tools to streamline your workflow</p>
