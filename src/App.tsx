@@ -10,6 +10,7 @@ import KanbanBoard from "./pages/KanbanBoard";
 import PomodoroTimer from "./pages/PomodoroTimer";
 import FlipClock from "./pages/FlipClock";
 import NotFound from "./pages/NotFound";
+import Legal from "./pages/Legal";
 
 const queryClient = new QueryClient();
 

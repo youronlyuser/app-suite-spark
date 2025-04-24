@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import AppLayout from "@/components/AppLayout";
-import { fullscreen } from "lucide-react";
+import { Fullscreen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const FlipClock = () => {
@@ -79,7 +79,7 @@ const FlipClock = () => {
             onClick={toggleFullscreen}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-300"
           >
-            <fullscreen className="h-6 w-6" />
+            <Fullscreen className="h-6 w-6" />
           </Button>
         </div>
       </div>
