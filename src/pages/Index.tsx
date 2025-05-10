@@ -65,8 +65,8 @@ const Index = () => {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="py-12 px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center py-8">
+      <div className="max-w-lg w-full px-4">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-3 text-white">
             Productivity Hub
@@ -74,7 +74,7 @@ const Index = () => {
           <p className="text-gray-400">Productivity tools to streamline your workflow</p>
         </header>
 
-        <div className="grid grid-cols-2 gap-8 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 gap-5 mx-auto">
           {apps.map((app) => (
             <Link to={app.path} key={app.name}>
               <Card className="app-card hover:bg-gray-800 border-gray-700">
@@ -88,12 +88,12 @@ const Index = () => {
 
         <div className="mt-12 text-center">
           <h2 className="text-xl font-semibold text-white mb-6">Free Templates</h2>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-4">
             {templates.map((template) => (
-              <Link to={template.path} key={template.name}>
+              <Link to={template.path} key={template.name} className="w-full">
                 <Button 
                   variant="outline" 
-                  className="w-full md:w-auto border-gray-700 hover:bg-gray-800 text-white flex gap-3 px-6 py-5"
+                  className="w-full border-gray-700 hover:bg-gray-800 text-white flex gap-3 px-6 py-5"
                 >
                   {template.icon}
                   <div className="flex flex-col items-start">
