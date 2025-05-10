@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -141,10 +140,6 @@ const KanbanBoard = () => {
 
   return (
     <AppLayout title="Kanban Board">
-      <div className="flex items-center mb-4">
-        <h1 className="text-xl font-semibold flex-1">Tasks ({totalTasksCount}/{MAX_TASKS})</h1>
-      </div>
-      
       <div className="overflow-x-auto pb-6">
         <div className="flex gap-6 min-w-max px-2 py-6">
           {columns.map(column => (
