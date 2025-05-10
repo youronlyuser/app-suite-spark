@@ -5,9 +5,12 @@ import {
   CheckSquare, 
   Kanban, 
   Clock, 
-  FlipHorizontal
+  FlipHorizontal,
+  FileText,
+  CalendarDays
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -44,6 +47,21 @@ const Index = () => {
     }
   ];
 
+  const templates = [
+    {
+      name: "Resume Template",
+      icon: <FileText className="h-5 w-5" />,
+      path: "/resume",
+      description: "Free professional resume builder"
+    },
+    {
+      name: "Personal Planner",
+      icon: <CalendarDays className="h-5 w-5" />,
+      path: "/planner",
+      description: "Free personal planning template"
+    }
+  ];
+
   if (!mounted) return null;
 
   return (
@@ -66,6 +84,26 @@ const Index = () => {
               </Card>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <h2 className="text-xl font-semibold text-white mb-6">Free Templates</h2>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            {templates.map((template) => (
+              <Link to={template.path} key={template.name}>
+                <Button 
+                  variant="outline" 
+                  className="w-full md:w-auto border-gray-700 hover:bg-gray-800 text-white flex gap-3 px-6 py-5"
+                >
+                  {template.icon}
+                  <div className="flex flex-col items-start">
+                    <span className="font-medium">{template.name}</span>
+                    <span className="text-xs text-gray-400">{template.description}</span>
+                  </div>
+                </Button>
+              </Link>
+            ))}
+          </div>
         </div>
 
         <footer className="mt-16 text-center text-sm text-gray-500">
