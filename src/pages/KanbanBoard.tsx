@@ -4,6 +4,7 @@ import { Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
 import AppLayout from "@/components/AppLayout";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
@@ -17,6 +18,8 @@ interface Column {
   title: string;
   tasks: Task[];
 }
+
+const MAX_TASKS = 8;
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState<Column[]>(() => 
@@ -39,6 +42,10 @@ const KanbanBoard = () => {
   useEffect(() => {
     setLocalStorage("kanbanColumns", columns);
   }, [columns]);
+
+  const getTotalTasksCount = () => {
+    return columns.reduce((count, column) => count + column.tasks.length, 0);
+  };
 
   const handleDragStart = (task: Task, columnId: string) => {
     setDraggedTask({ task, columnId });
@@ -86,6 +93,18 @@ const KanbanBoard = () => {
   const addNewTask = () => {
     if (!activeColumn || !newTaskText.trim()) return;
     
+    const totalTasks = getTotalTasksCount();
+    
+    if (totalTasks >= MAX_TASKS) {
+      toast({
+        title: "Task limit reached",
+        description: `You can only create up to ${MAX_TASKS} tasks.`,
+        variant: "destructive"
+      });
+      setIsAddingTask(false);
+      return;
+    }
+    
     const updatedColumns = columns.map(column => {
       if (column.id === activeColumn) {
         return {
@@ -118,8 +137,14 @@ const KanbanBoard = () => {
     setColumns(updatedColumns);
   };
 
+  const totalTasksCount = getTotalTasksCount();
+
   return (
     <AppLayout title="Kanban Board">
+      <div className="flex items-center mb-4">
+        <h1 className="text-xl font-semibold flex-1">Tasks ({totalTasksCount}/{MAX_TASKS})</h1>
+      </div>
+      
       <div className="overflow-x-auto pb-6">
         <div className="flex gap-6 min-w-max px-2 py-6">
           {columns.map(column => (
@@ -138,6 +163,14 @@ const KanbanBoard = () => {
                   variant="ghost" 
                   size="icon"
                   onClick={() => {
+                    if (totalTasksCount >= MAX_TASKS) {
+                      toast({
+                        title: "Task limit reached",
+                        description: `You can only create up to ${MAX_TASKS} tasks.`,
+                        variant: "destructive"
+                      });
+                      return;
+                    }
                     setActiveColumn(column.id);
                     setIsAddingTask(true);
                   }}
