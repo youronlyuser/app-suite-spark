@@ -1,8 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import AppLayout from "@/components/AppLayout";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
@@ -19,6 +20,7 @@ interface Column {
 }
 
 const MAX_TASKS = 8;
+const MAX_CHAR_LENGTH = 100;
 
 const KanbanBoard = () => {
   const [columns, setColumns] = useState<Column[]>(() => 
@@ -214,6 +216,9 @@ const KanbanBoard = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Task</DialogTitle>
+            <DialogDescription>
+              Tasks are limited to {MAX_CHAR_LENGTH} characters.
+            </DialogDescription>
           </DialogHeader>
           
           <Input
@@ -222,10 +227,15 @@ const KanbanBoard = () => {
             placeholder="Enter task details"
             className="mt-4"
             autoFocus
+            maxLength={MAX_CHAR_LENGTH}
             onKeyDown={(e) => {
               if (e.key === 'Enter') addNewTask();
             }}
           />
+          
+          <div className="text-xs text-muted-foreground text-right mt-1">
+            {newTaskText.length}/{MAX_CHAR_LENGTH}
+          </div>
           
           <DialogFooter className="mt-4">
             <Button variant="outline" onClick={() => setIsAddingTask(false)}>

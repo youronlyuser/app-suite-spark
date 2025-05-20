@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AppLayout from "@/components/AppLayout";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface Todo {
   id: string;
@@ -14,6 +14,7 @@ interface Todo {
 }
 
 const MAX_TODOS = 6;
+const MAX_CHAR_LENGTH = 100;
 
 const TodoApp = () => {
   const [todos, setTodos] = useState<Todo[]>(() => 
@@ -98,7 +99,7 @@ const TodoApp = () => {
               value={newTodo}
               onChange={e => setNewTodo(e.target.value)}
               placeholder="What needs to be done?"
-              maxLength={100}
+              maxLength={MAX_CHAR_LENGTH}
               onKeyDown={e => {
                 if (e.key === 'Enter') addTodo();
               }}
@@ -113,9 +114,14 @@ const TodoApp = () => {
               Add
             </Button>
           </div>
-          <p className="text-xs mt-2 text-muted-foreground text-right">
-            {todos.length}/{MAX_TODOS} tasks
-          </p>
+          <div className="flex justify-between mt-2">
+            <p className="text-xs text-muted-foreground">
+              {newTodo.length}/{MAX_CHAR_LENGTH}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {todos.length}/{MAX_TODOS} tasks
+            </p>
+          </div>
         </div>
         
         <div className="space-y-2">
@@ -144,6 +150,7 @@ const TodoApp = () => {
                     <Input 
                       value={editText}
                       onChange={e => setEditText(e.target.value)}
+                      maxLength={MAX_CHAR_LENGTH}
                       onKeyDown={e => {
                         if (e.key === 'Enter') saveEdit();
                         if (e.key === 'Escape') setEditingId(null);
@@ -151,6 +158,9 @@ const TodoApp = () => {
                       autoFocus
                       aria-label="Edit task text"
                     />
+                    <small className="text-xs text-muted-foreground self-center">
+                      {editText.length}/{MAX_CHAR_LENGTH}
+                    </small>
                     <Button size="sm" onClick={saveEdit}>Save</Button>
                   </div>
                 ) : (
